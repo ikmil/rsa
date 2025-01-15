@@ -8,14 +8,21 @@
 -->
 <template>
   <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
+    <header>
+        <NuxtLink to="/">首页</NuxtLink>
+        <NuxtLink to="/enc">详情</NuxtLink>
+
+
+    </header>
+    <NuxtPage></NuxtPage>
   </div>
 </template>
 <script setup lang="ts">
-
-
-  const {data} = await useFetch('/api/test?a=1&b=2')
-  console.log('---')
-  console.log(data.value?.c)
+ 
 </script>
+<style lang="scss" scoped>
+
+p{
+  color: $mycolor;
+}
+</style>
