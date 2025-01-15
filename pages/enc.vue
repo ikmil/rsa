@@ -8,21 +8,28 @@
 -->
 <template>
     <div>
-        adfasdfsafdsdf
+        {{ pubkey }}
     </div>
 </template>
 <script setup lang="ts">
 const route = useRoute()
 console.log(route.query);
+    const pubkey = ref('')
+
+    const{publicKey} = aescStore()
 
 
-definePageMeta({
-    middleware: [
-        function(to,from){
-            console.log(to.path);
+    onMounted(()=>{
+        pubkey.value = publicKey
+    })
+
+// definePageMeta({
+//     middleware: [
+//         function(to,from){
+//             console.log(to.path);
             
-        }
-    ],
-})
+//         }
+//     ],
+// })
 
 </script>

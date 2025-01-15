@@ -7,19 +7,28 @@
  * @FilePath: /rsa/pages/index.vue
 -->
 <script lang="ts" setup>
-    const key = ref('')
+
+    const publicKey = ref('')
+    const privateKey = ref('')
+    const encrypt_text = ref('')
+    const create_key = async() => {
+        const result = await useFetch('/api/createkey')
+        const data = result.data.value
+        if (data?.code==200) {
+            publicKey.value = data.publicKey
+            privateKey.value = data.privateKey
+            aescStore().setAes(data.publicKey,data.privateKey)
+        }
+    }
+
+
+  
     onMounted(() => {
-        key.value = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlOFn8l16VptbsuGQ0qln
-M0B2DrT3fvEQcCI+rEGv1Ll4TAF83lpDrZlICcLEGM5lapzsS6RuTzZ6yet/Qgat
-vJxjhiLjK7LNkEvuILqY73EgGqEkk8m5gzQV7j1P0YRA0L+tT/HxByWTdXY/QkP5
-z6YOUKmfbu6ib+nNbtTSAZJbMko6usHNQmXjrZsRq/wcejG27476NIGTQ8g5JttB
-vn5Blh1ukzQG77mvQVxFvv7UUw/4uCNlLBdFCglA9wMcMg2As8SPIQqoX7AIb6KX
-3x5u652JZW62xUpDqPNeuvppzx9x3S51c6hxb87UZEsRcoUsjpIg7IT9bS9Otpyz
-dQIDAQAB
------END PUBLIC KEY-----
-`
+        const aes = aescStore().getAes()
+        publicKey.value = aes.publicKey
+        privateKey.value = aes.privateKey
     })
+
 </script>
 
 <template>
@@ -30,18 +39,42 @@ dQIDAQAB
         </div>
         <el-row justify="center">
             <el-col :span="12">
-                <div class="text-area">
-                    <el-input
-                        v-model="key"
-                        type="textarea"
-                        :rows="10"
-                        resize="none"
-                        readonly
-                    ></el-input>
+                <h3>秘钥管理</h3>
+                <div class="no-data" v-if="!publicKey">
+                    <el-empty description="暂无秘钥，请生成" :image-size="100"></el-empty>
+                    <div>
+                        <el-button type="primary" @click="create_key">生成秘钥</el-button>
+                    </div>
                 </div>
-                <div style="margin-top: 20px;">
-                    <el-button type="primary">下载秘钥</el-button>
-                    <el-button type="success">分享公钥</el-button>
+                <div v-if="publicKey">
+                    <div class="text-area">
+                        <el-input
+                            input-style="font-size: 14px;font-weight: 500;line-height: 1.6;"
+                            v-model="publicKey"
+                            type="textarea"
+                            :rows="10"
+                            resize="none"
+                            readonly
+                        ></el-input>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <el-button type="primary">下载秘钥</el-button>
+                        <el-button type="success">分享公钥</el-button>
+                    </div>
+                </div>
+                <div v-if="publicKey">
+                    <h3>解密操作</h3>
+                    <el-text>在下方填入密文</el-text>
+                    <div class="text-area">
+                        <el-input
+                            input-style="font-size: 14px;font-weight: 500;line-height: 1.6;"
+                            v-model="encrypt_text"
+                            type="textarea"
+                            :rows="10"
+                            resize="none"
+                            placeholder="填入需要加密的数据"
+                        ></el-input>
+                    </div>
                 </div>
             </el-col>
         </el-row>
@@ -49,6 +82,12 @@ dQIDAQAB
 </template>
 
 <style lang="scss" scoped>
+    .no-data{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     .desc{
         text-align: center;
         color: var(--primary-text-color);
@@ -56,9 +95,10 @@ dQIDAQAB
             color: rgb(115.2, 117.6, 122.4);
         }
     }
-    .el-textarea__inner{
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.2;
+    .el-text{
+        display: block;
+        margin-bottom: 10px;
     }
+    
+    
 </style>
