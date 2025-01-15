@@ -1,0 +1,12 @@
+:root{
+    --primary-color: #fff;
+    --secondary-color: #000;
+    --primary-text-color:rgb(51 65 85);
+    --secondary-text-color:rgb(0 193 106);
+}
+
+body,html{
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
