@@ -2,15 +2,16 @@
  * @Author: your name
  * @Date: 2025-01-15 15:21:02
  * @LastEditors: your name
- * @LastEditTime: 2025-01-15 18:25:09
+ * @LastEditTime: 2025-01-16 17:13:31
  * @Description: 
  * @FilePath: /rsa/pages/index.vue
 -->
 <script lang="ts" setup>
-
+    const route = useRoute()
     const publicKey = ref('')
     const privateKey = ref('')
     const encrypt_text = ref('')
+    const decrypto_text = ref('')
     const create_key = async() => {
         const result = await useFetch('/api/createkey')
         const data = result.data.value
@@ -21,14 +22,76 @@
         }
     }
 
-
+    const decrypto = async ()=>{
+        const response = await useFetch('/api/decrypt',{
+            method: 'POST',
+            body: {
+                privkey: privateKey.value,
+                text: encrypt_text.value
+            }
+        })
+        const data = response.data.value
+        if(data?.code==200){
+            decrypto_text.value = data.data
+            ElMessage({
+                message: data?.message,
+                type: 'success'
+            })
+        }else{
+            ElMessage({
+                message: data?.message,
+                type: 'error'
+            })
+        }
+    }
   
     onMounted(() => {
-        const aes = aescStore().getAes()
-        publicKey.value = aes.publicKey
-        privateKey.value = aes.privateKey
+        publicKey.value = aescStore().publicKey
+        privateKey.value = aescStore().privateKey
+        const query = route.query
+        if(query.endata){
+            encrypt_text.value = decodeURIComponent(atob(query.endata as string))
+        }
     })
 
+
+
+    const share = ()=>{
+        let url = window.location.protocol+'://'+window.location.host+'/enc'
+        url = url + '?publicKey=' + btoa(encodeURIComponent(publicKey.value))
+        navigator.clipboard.writeText(url)
+        ElMessage({
+            message: '复制成功,快分享给别人吧！',
+            type: 'success'
+        })
+    }
+
+    interface FileOption{
+        text:string
+        name:string
+    }
+    const downloadFile = (file:FileOption)=>{
+        const blob = new Blob([file.text], {type: 'text/plain'})
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.style.display = 'none'
+        a.href = url
+        a.download = file.name+'.pem'
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        
+    }
+    function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    const download = ()=>{
+        [{text:privateKey.value,name:'privateKey'}, {text:publicKey.value,name:'publicKey'}].map((item,index)=>{
+            delay(index*1000).then(()=>{
+                downloadFile(item)
+            })
+        })
+    }
 </script>
 
 <template>
@@ -58,8 +121,8 @@
                         ></el-input>
                     </div>
                     <div style="margin-top: 20px;">
-                        <el-button type="primary">下载秘钥</el-button>
-                        <el-button type="success">分享公钥</el-button>
+                        <el-button type="primary" @click="download">下载秘钥</el-button>
+                        <el-button type="success" @click="share">分享公钥链接</el-button>
                     </div>
                 </div>
                 <div v-if="publicKey">
@@ -75,6 +138,16 @@
                             placeholder="填入需要加密的数据"
                         ></el-input>
                     </div>
+                    <div style="margin-top: 20px;">
+                        <el-button type="primary" @click="decrypto">解密</el-button>
+                    </div>
+                    <div v-if="decrypto_text!=''">
+                        <h3>解密结果</h3>
+                        <div class="decrypto-area">
+                            {{ decrypto_text }}
+                        </div>
+                    </div>
+                    
                 </div>
             </el-col>
         </el-row>
@@ -98,6 +171,15 @@
     .el-text{
         display: block;
         margin-bottom: 10px;
+    }
+    .decrypto-area{
+        font-size: 14px;
+        background: #fff;
+        padding: 10px;
+        line-height: 1.5;
+        border-radius: 5px;
+        border: 1px solid var(--el-border-color);
+        word-break: break-all;
     }
     
     

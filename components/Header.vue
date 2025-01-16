@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2025-01-15 15:53:08
  * @LastEditors: your name
- * @LastEditTime: 2025-01-15 18:04:21
+ * @LastEditTime: 2025-01-16 10:36:45
  * @Description: 
  * @FilePath: /rsa/components/Header.vue
 -->
@@ -28,9 +28,8 @@
         padding-top: 60px;
     }
     .header{
-        background: #fefefe;
-        color: #fff;
-        backdrop-filter: blur(100px);
+        background: rgb(255 255 255 / 75%);
+        backdrop-filter: blur(8px);
         padding: 10px 0;
         position: fixed;
         left: 0;

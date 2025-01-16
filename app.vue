@@ -2,19 +2,21 @@
  * @Author: your name
  * @Date: 2024-12-25 19:41:01
  * @LastEditors: your name
- * @LastEditTime: 2025-01-15 17:10:29
+ * @LastEditTime: 2025-01-16 10:30:28
  * @Description: 
  * @FilePath: /rsa/app.vue
 -->
 <template>
-  <div>
+  <div class="content">
     <Header></Header>
     <NuxtPage></NuxtPage>
   </div>
 </template>
 <script setup lang="ts">
- 
+  
 </script>
 <style lang="scss" scoped>
-  
+  .content{
+    margin-bottom: 30px;
+  }
 </style>

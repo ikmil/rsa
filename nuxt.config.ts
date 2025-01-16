@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2025-01-15 15:21:02
  * @LastEditors: your name
- * @LastEditTime: 2025-01-15 18:32:24
+ * @LastEditTime: 2025-01-16 15:51:49
  * @Description: 
  * @FilePath: /rsa/nuxt.config.ts
  */
@@ -29,6 +29,10 @@ export default defineNuxtConfig({
   },
   modules:[
     '@element-plus/nuxt',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt'
   ],
+  piniaPluginPersistedstate: {
+    storage: 'localStorage',
+  },
 })
