@@ -1,12 +1,20 @@
 :root{
-    --primary-color: #fff;
-    --secondary-color: #000;
+    --primary-bg-color: #fff;
     --primary-text-color:rgb(51 65 85);
     --secondary-text-color:rgb(0 193 106);
+    --secondary-color: #000;
+    --description-text-color:rgb(115.2, 117.6, 122.4)
+   
 }
 
+
+
+.dark {
+    --primary-bg-color: #141414;
+    --primary-text-color: #ffffff;
+    --description-text-color:rgb(200, 200, 200)
+}
 body,html{
     margin: 0;
     padding: 0;
-    background-color: #F2F3F5;
 }

@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2025-01-15 15:21:02
  * @LastEditors: your name
- * @LastEditTime: 2025-01-16 17:13:31
+ * @LastEditTime: 2025-01-19 18:27:08
  * @Description: 
  * @FilePath: /rsa/pages/index.vue
 -->
@@ -101,7 +101,7 @@
             <h4>使用非对称加密技术加密您的数据</h4>
         </div>
         <el-row justify="center">
-            <el-col :span="12">
+            <el-col :sm="12" :xs="22">
                 <h3>秘钥管理</h3>
                 <div class="no-data" v-if="!publicKey">
                     <el-empty description="暂无秘钥，请生成" :image-size="100"></el-empty>

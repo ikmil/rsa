@@ -2,27 +2,67 @@
  * @Author: your name
  * @Date: 2024-12-25 19:41:01
  * @LastEditors: your name
- * @LastEditTime: 2025-01-16 17:45:55
+ * @LastEditTime: 2025-01-19 18:21:30
  * @Description: 
  * @FilePath: /rsa/app.vue
 -->
 <template>
-  <div class="content">
+  <div class="content" :class="{ 'dark': themeStore.isDark }">
     <Header></Header>
+    <button class="theme-toggle" @click="themeStore.toggleTheme">
+      {{ themeStore.isDark ? '🌙' : '☀️' }}
+    </button>
     <NuxtPage></NuxtPage>
   </div>
 </template>
+
 <script setup lang="ts">
-  useHead({
-    title:'在线RSA加密解密',
-    meta: [
-      { name: 'description', content: '在线RSA加密解密' },
-      { name: 'keywords', content: 'RSA、加密、解密、在线' }
-    ]
+import { useThemeStore } from '~/composables/themeStore'
+
+const themeStore = useThemeStore()
+
+useHead({
+  title:'在线RSA加密解密',
+  meta: [
+    { name: 'description', content: '在线RSA加密解密' },
+    { name: 'keywords', content: 'RSA、加密、解密、在线' }
+  ]
+})
+
+ onMounted(() => {
+  const mediaQueryList = matchMedia('(prefers-color-scheme: dark)')
+  // themeStore.setTheme(mediaQueryList.matches ? 'dark' : 'light')
+  mediaQueryList.addEventListener('change', (evt) => {
+    const theme = evt.matches ? 'dark' : 'light'
+    themeStore.setTheme(theme)
   })
+    
+  })
+
 </script>
+
 <style lang="scss" scoped>
-  .content{
-    margin-bottom: 30px;
-  }
+.content {
+  margin-bottom: 30px;
+}
+
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
 </style>

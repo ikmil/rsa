@@ -2,14 +2,14 @@
  * @Author: your name
  * @Date: 2025-01-15 15:21:02
  * @LastEditors: your name
- * @LastEditTime: 2025-01-16 17:11:54
+ * @LastEditTime: 2025-01-19 18:28:13
  * @Description: 
  * @FilePath: /rsa/pages/enc.vue
 -->
 <template>
     <div style="margin-top: 30px;">
         <el-row justify="center">
-            <el-col :span="12">
+            <el-col :sm="12" :xs="22">
                 <h3>公钥</h3>
                 <el-text>接受者的公钥</el-text>
                 <el-input
