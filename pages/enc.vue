@@ -10,33 +10,33 @@
     <div style="margin-top: 30px;">
         <el-row justify="center">
             <el-col :sm="12" :xs="22">
-                <h3>公钥</h3>
-                <el-text>接受者的公钥</el-text>
+                <h3>{{ useT('rowTitle3') }}</h3>
+                <el-text>{{ useT('rowTitle3Des') }}</el-text>
                 <el-input
                 type="textarea"
                 :rows="10"
-                placeholder="请输入内容或自动填充"
+                :placeholder="useT('rowTitle3Placeholder')"
                 v-model="pubkey"
                 ></el-input>
-                <h3>你的消息</h3>
-                <el-text>需要加密的信息</el-text>
+                <h3>{{ useT('rowTitle4') }}</h3>
+                <el-text>{{ useT('rowTitle4Des') }}</el-text>
                 <el-input
                 type="textarea"
                 :rows="10"
-                placeholder="请输入内容"
+                :placeholder="useT('rowTitle4Placeholder')"
                 v-model="text"
                 ></el-input>
                 <div style="margin-top: 20px;">
-                    <el-button type="primary" @click="encData">加密</el-button>
+                    <el-button type="primary" @click="encData">{{ useT('encryName') }}</el-button>
                 </div>
                 <div v-if="enctext != ''">
-                    <h3>加密结果</h3>
+                    <h3>{{ useT('encryResult') }}</h3>
                     <div class="result-text">
                         {{ enctext }}
                     </div>
                     <div style="margin-top: 20px;">
-                        <el-button type="primary" @click="copy">复制</el-button>
-                        <el-button type="success" @click="share">分享加密链接</el-button>
+                        <el-button type="primary" @click="copy">{{ useT('copyName') }}</el-button>
+                        <el-button type="success" @click="share">{{ useT('copyLink') }}</el-button>
                     </div>
                 </div>
                 

@@ -7,15 +7,14 @@
  * @FilePath: /rsa/components/Header.vue
 -->
 <script lang="ts" setup>
-import type { RouteLocationAsRelativeGeneric, RouteLocationAsPathGeneric } from 'vue-router';
 
     const menu  = ref([
         {
-            name: '首页',
+            name: useT('menu1'),
             path: '/'
         },
         {
-            name: '加密',
+            name: useT('menu2'),
             path: '/enc'
         }
     ])

@@ -18,13 +18,14 @@
 
 <script setup lang="ts">
 import { useThemeStore } from '~/composables/themeStore'
-
+import {useI18n} from 'vue-i18n'
+const { t ,setLocale} = useI18n()
 const themeStore = useThemeStore()
 
 useHead({
-  title:'在线RSA加密解密',
+  title:t('title'),
   meta: [
-    { name: 'description', content: '在线RSA加密解密' },
+    { name: 'description', content: '' },
     { name: 'keywords', content: 'RSA、加密、解密、在线' }
   ]
 })
@@ -36,8 +37,13 @@ useHead({
     const theme = evt.matches ? 'dark' : 'light'
     themeStore.setTheme(theme)
   })
-    
-  })
+
+  // console.log(navigator.language);
+  // const userLanguage  = navigator.language=='zh-CN'?'zh' : 'en'
+  // setLocale(userLanguage)
+
+
+})
 
 </script>
 

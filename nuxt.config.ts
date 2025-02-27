@@ -28,11 +28,27 @@ export default defineNuxtConfig({
     },
   },
   modules:[
-    '@element-plus/nuxt',
-    '@pinia/nuxt',
-    'pinia-plugin-persistedstate/nuxt'
+   '@element-plus/nuxt',
+   '@pinia/nuxt',
+   'pinia-plugin-persistedstate/nuxt',
+   '@nuxtjs/i18n',
   ],
   piniaPluginPersistedstate: {
     storage: 'localStorage',
   },
+  i18n:{
+    locales:[
+      {code:'en',name:'English',iso:'en-US',file:'en.json'},
+      {code:'zh',name:'中文',iso:'zh-CN',file:'zh.json'}
+    ],
+    defaultLocale:'zh',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage:{
+      useCookie:true,
+      cookieKey:'i18n_redirected',
+      redirectOn: 'root',
+    },
+    lazy:true,
+    langDir:'../locales',
+  }
 })
