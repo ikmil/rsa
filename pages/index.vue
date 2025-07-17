@@ -12,6 +12,7 @@
     const privateKey = ref('')
     const encrypt_text = ref('')
     const decrypto_text = ref('')
+    const initialized = ref(false)
     const create_key = async() => {
         const result = await useFetch('/api/createkey')
         const data = result.data.value
@@ -52,6 +53,7 @@
         if(query.endata){
             encrypt_text.value = decodeURIComponent(atob(query.endata as string))
         }
+        initialized.value = true
     })
 
 
@@ -101,7 +103,7 @@
             <h4>{{ useT('bigDes') }}</h4>
         </div>
         <el-row justify="center">
-            <el-col :sm="12" :xs="22">
+            <el-col :sm="12" :xs="22" v-if="initialized">
                 <h3>{{ useT('rowTitle1') }}</h3>
                 <div class="no-data" v-if="!publicKey">
                     <el-empty :description="useT('emptyDes')" :image-size="100"></el-empty>
