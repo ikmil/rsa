@@ -13,12 +13,14 @@
       {{ themeStore.isDark ? '🌙' : '☀️' }}
     </button>
     <NuxtPage></NuxtPage>
+    <Analytics />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useThemeStore } from '~/composables/themeStore'
 import {useI18n} from 'vue-i18n'
+import { Analytics } from '@vercel/analytics/nuxt'
 const { t ,setLocale} = useI18n()
 const themeStore = useThemeStore()
 
